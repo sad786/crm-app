@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>{{ customer.name }} - Details</title>
+</head>
+<body>
+    <!--
+    <h1>{{ customer.name }}</h1>
+    <p>Email: {{ customer.email }}</p>
+    <p>Phone: {{ customer.phone }}</p>
+    <p>Address: {{ customer.address }}</p>
+    -->
+    
+
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h1>{{ customer.name }}</h1></div>
+        <div class="panel-body">
+            <strong>Email:</strong> {{ customer.email }} <br>
+            <strong>Phone:</strong> {{ customer.phone }}<br>
+            <strong>Address:</strong> {{ customer.address }}<br>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+    <div class="panel-heading"><h2>Interactions</h2></div>
+   
+        <div class="panel-body">
+            <a clas="btn btn-link" href="{% url 'add_interaction' customer.pk %}">Add Interaction</a>
+            <ul>
+                {% for interaction in customer.interactions.all %}
+                    <li>
+                        <strong>{{ interaction.interaction_type }}</strong> on {{ interaction.date }}
+                        <p>{{ interaction.notes }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+    <h2>Notes</h2></div>
+    <a class="btn btn-link" href="{% url 'add_note' customer.pk %}">Add Note</a>
+    <div class="panel-body">
+    <ul>
+        {% for note in customer.notes.all %}
+            <li>
+                <strong>{{ note.created_at }}</strong>
+                <p>{{ note.content }}</p>
+            </li>
+        {% endfor %}
+    </ul></div>
+    </div>
+    <a class="btn btn-primary" href="{% url 'customer_list' %}">Back to Customer List</a>
+</body>
+</html>

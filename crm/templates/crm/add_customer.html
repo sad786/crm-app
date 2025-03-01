@@ -3,48 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Add Customer</title>
 </head>
 <body>
-    <h1>Add Customer</h1>
-    <form method="post">
+    
+    <form method="post" action="{%url 'add_customer' %}">
         {% csrf_token %}
 
+        <!--
+        {% if form.errors %}
+
+            
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                
+                <strong>Error:</strong> Check these errors
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            
+        {% endif %}-->
+
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="card-p-4">
+                <h2 class="text-center mb-4">Add Customer</h2>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Name</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
+            <input type="text" name="name" class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
             {% if form.name.errors %}
             <p class="text-red-500 text-sm mt-1">{{ form.name.errors}}</p>
             {% endif %}
+            
         </div>
 
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
             {% if form.email.errors %}
             <p class="text-red-500 text-sm mt-1">{{ form.email.errors}}</p>
             {% endif %}
+            
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Phone</label>
-            <input type="tel" class="form-control" id="exampleFormControlInput1" placeholder="Your phone number">
+            <input type="tel" name="phone"class="form-control" id="exampleFormControlInput1" placeholder="Your phone number">
             {% if form.phone.errors %}
             <p class="text-red-500 text-sm mt-1">{{ form.phone.errors}}</p>
             {% endif %}
+            
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Address</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" name="address" id="exampleFormControlTextarea1" rows="3"></textarea>
+            
             
             {% if form.address.errors %}
             <p class="text-red-500 text-sm mt-1">{{ form.address.errors}}</p>
             {% endif %}
+            
         </div>
 
         <br>
-        <button class="btn btn-primary" role="button" type="submit">Save</button>
+        <button class="btn btn-primary" type="submit">Save</button>
         <a class="btn btn-primary" role="button" href="{% url 'customer_list' %}">Cancel</a>
+        </div></div>
     </form><br>
 </body>
 </html>

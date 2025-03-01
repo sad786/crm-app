@@ -1,12 +1,17 @@
+{# templates/customer_list.html #}
 <!DOCTYPE html>
-<html lang="en">
+{% extends 'crm/base.html' %}
+<!--<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <title>Customer List</title>
 </head>
-<body>
+<body> -->
+    {%block title %}Customer List {%endblock%}
+
+    {%block content %}
     <h1>Customer List</h1>
     
     <a class="btn btn-primary" href="{% url 'add_customer' %}" role="button">Add New Customer</a><br><br>
@@ -16,8 +21,8 @@
             <li class="list-group-item">
                 <a href="{% url 'customer_detail' customer.pk %}" class="list-group-item list-group-item-action">{{ customer.name }} - {{ customer.email }}</a>
             </li>
+            
         {% endfor %}
     </ul>
     </div>
-
-</body>
+    {%endblock%}

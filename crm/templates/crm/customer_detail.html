@@ -55,5 +55,8 @@
     </ul></div>
     </div>
     <a class="btn btn-primary" href="{% url 'customer_list' %}">Back to Customer List</a>
+    <form method="post" action="{%url 'delete' customer.id%}" onsubmit="return confirm('Are you sure you want to delete {{ customer.name }}?');">
+        {%csrf_token%}
+        <button type="submit" class="btn btn-secondary">delete</button></form>
 </body>
 </html>

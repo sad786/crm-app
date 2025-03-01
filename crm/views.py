@@ -3,7 +3,19 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Customer, Interaction, Note
 from .forms import CustomerForm, InteractionForm, NoteForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
 
+
+class LoginView(auth_views.LoginView):
+    template_name="login.html"
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('customer_list')
+
+@login_required
 def customer_list(request):
     """
     Displays a list of all customers.
@@ -11,6 +23,7 @@ def customer_list(request):
     customers = Customer.objects.all()
     return render(request, 'crm/customer_list.html', {'customers': customers})
 
+@login_required
 def customer_detail(request, pk):
     """
     Displays details of a specific customer, including interactions and notes.
@@ -18,6 +31,7 @@ def customer_detail(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     return render(request, 'crm/customer_detail.html', {'customer': customer})
 
+@login_required
 def add_customer(request):
     """
     Handles the creation of a new customer.
@@ -31,6 +45,7 @@ def add_customer(request):
         form = CustomerForm()
     return render(request, 'crm/add_customer.html', {'form': form})
 
+@login_required
 def add_interaction(request, customer_id):
     """
     Handles the creation of a new interaction for a customer.
@@ -47,6 +62,7 @@ def add_interaction(request, customer_id):
         form = InteractionForm()
     return render(request, 'crm/add_interaction.html', {'form': form, 'customer': customer})
 
+@login_required
 def add_note(request, customer_id):
     """
     Handles the creation of a new note for a customer.
@@ -62,3 +78,13 @@ def add_note(request, customer_id):
     else:
         form = NoteForm()
     return render(request, 'crm/add_note.html', {'form': form, 'customer': customer})
+
+
+@login_required
+def delete(request, customer_id):
+    customer = get_object_or_404(Customer, pk=customer_id)
+    if request.method=="POST":
+        customer.delete()
+        return redirect('customer_list')
+
+    return redirect('customer_list')
